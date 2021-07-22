@@ -1,0 +1,26 @@
+body {
+    background-color: #E6E6E6;
+}
+
+.row {
+    min-height: 90vh;
+}
+
+.col-6 {
+    background-color: white;
+    border-radius: 1rem;
+    padding: 1.4rem 2.2rem;
+}
+
+.btn-primary {
+    border-radius: 1rem;
+    font-size: 1.5rem;
+    padding:1rem 1rem;
+    border: none;
+}
+
+#quote-text {
+    font-size: 1.8rem;
+    border-left: 3px solid black;
+    padding-left: 1.5rem;
+}
