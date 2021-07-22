@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name = "viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIMPLE TODO APP</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+</head>
+<body>
+    <div class=container>
+        <div class="row justify-content-center mt-5">
+            <div class="col-6">
+                <h1 class="text-monospace">
+                    <img src=./space_icon.png width="75" height="75">
+
+                    SIMPLE TODO APP</h1>
+
+                    <ol id="todo_list" class="text-monospace my-5">
+                        <li>Finish MOC course on Javascript</li>
+                        <li>Start learning MongoDB</li>
+                        <li>Start coding the application</li>
+                    </ol>
+
+                    <input type="text" name="todo" id="todo_field"
+                    class="form-control" value="" placeholder="Add an element to the list">
+
+                    <button class="btn btn-primary btn-block mt-3" 
+                    onclick="buttonClick(this)"
+                    onmouseout="mouseOut(this)">Add an element</button>
+            </div>
+        </div>
+    </div>
+    <script src="./app.js"></script>
+</body>
+</html>
