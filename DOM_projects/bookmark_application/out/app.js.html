@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: app.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: app.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file ./app.js is the main file of this application. In here, one can find the main logic of the application. 
+ * @version 1.0.1
+ * @author Yael Demers
+ */
+
+ /**
+   * Query selector letting the application interact with the "bookmarks" button
+   * @type {button}
+   */
+const bookmarkBtn = document.querySelector('#bookmark_btn');
+
+ /**
+   * Query selector letting the application interact with the list of bookmarks of the user
+   * @type {string}
+   */
+const bookmarkList = document.querySelector(".bookmarks");
+
+document.addEventListener('DOMContentLoaded',  getBookmarks());
+
+/**
+ * Function used to retrieve the bookmark list from the local storage of the user's computer and then display it
+ */
+function getBookmarks() {
+    let bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
+
+    if(!bookmarks) {
+        bookmarks = [];
+    }
+
+    bookmarks.forEach(bookmark => {
+        const markup = `&lt;div class="bookmark-card">
+        &lt;p>${bookmark.text} &lt;span id=bookmark_id>${bookmark.id}&lt;/span>&lt;/p>
+        &lt;p id="date">Added on: ${bookmark.date}&lt;/p>
+        &lt;a href="${bookmark.url}" class="btn btn-primary" target="_blank">View Bookmark&lt;/a>
+        &lt;a href="#" id="delete_bookmark" class="btn btn-danger">Delete Bookmark&lt;/a>
+    &lt;/div>`
+
+bookmarkList.insertAdjacentHTML('afterbegin', markup); //pushing on the stack
+    })
+
+}
+
+bookmarkBtn.addEventListener('click', addBookmark);
+
+/**
+ * Function used to push a new bookmark to the list of locally stored bookmarks and then display it
+ */
+function addBookmark() { //to local storage
+    const text = document.querySelector('#textField').value;
+    const url = document.querySelector('#urlField').value;
+    const date = new Date(Date.now()).toString().substring(0, 24);
+
+    let bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
+    let id;
+    if(!bookmarks || bookmarks.length === 0) {
+        bookmarks = [];
+        id = 0;
+    } else {
+        //bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
+        id = parseInt(bookmarks[bookmarks.length -1].id)+1;
+    }
+
+    let bookmark = {
+        "id": id,
+        "text": text,
+        "url": url,
+        "date": date
+    };
+
+    bookmarks.push(bookmark);
+
+    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+
+    const markup = `&lt;div class="bookmark-card">
+                    &lt;p>${text} &lt;span id=bookmark_id>${id}&lt;/span>&lt;/p>
+                    &lt;p id="date">Added on: ${date}&lt;/p>
+                    &lt;a href="${url}" class="btn btn-primary" target="_blank">View Bookmark&lt;/a>
+                    &lt;a href="#" id="delete_bookmark" class="btn btn-danger">Delete Bookmark&lt;/a>
+                &lt;/div>`
+
+    bookmarkList.insertAdjacentHTML('afterbegin', markup); //pushing on the stack
+}
+
+document.querySelector('form').addEventListener('submit', e=> {
+    e.preventDefault();
+});
+
+//delete bookmark from list UI
+bookmarkList.addEventListener('click', e=> {
+    if(e.target.matches('#delete_bookmark')) {
+        let id = document.querySelector('#bookmark_id').textContent;
+        e.target.parentElement.remove();
+        removeFromLocalStorage(id);
+    }
+})
+/**
+ * Function used to remove a bookmark from the local storage of the user's computer and then update the GUI
+ * @param {*} id - the id of the bookmark the function aims to remove
+ */
+function removeFromLocalStorage(id) {
+    let bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
+    
+    if(!bookmarks) {
+        bookmarks = [];
+    }
+
+    bookmarks.forEach((bookmark, index) => {
+        if(bookmark.id===parseInt(id)) {
+            bookmarks.splice(index, 1);
+        }
+    });
+    localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addBookmark">addBookmark</a></li><li><a href="global.html#bookmarkBtn">bookmarkBtn</a></li><li><a href="global.html#bookmarkList">bookmarkList</a></li><li><a href="global.html#getBookmarks">getBookmarks</a></li><li><a href="global.html#removeFromLocalStorage">removeFromLocalStorage</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Mon Aug 02 2021 21:39:20 GMT-0400 (Eastern Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
