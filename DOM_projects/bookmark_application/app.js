@@ -1,8 +1,26 @@
+/**
+ * @file ./app.js is the main file of this application. In here, one can find the main logic of the application. 
+ * @version 1.0.1
+ * @author Yael Demers
+ */
+
+ /**
+   * Query selector letting the application interact with the "bookmarks" button
+   * @type {button}
+   */
 const bookmarkBtn = document.querySelector('#bookmark_btn');
+
+ /**
+   * Query selector letting the application interact with the list of bookmarks of the user
+   * @type {string}
+   */
 const bookmarkList = document.querySelector(".bookmarks");
 
 document.addEventListener('DOMContentLoaded',  getBookmarks());
 
+/**
+ * Function used to retrieve the bookmark list from the local storage of the user's computer and then display it
+ */
 function getBookmarks() {
     let bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
 
@@ -25,6 +43,9 @@ bookmarkList.insertAdjacentHTML('afterbegin', markup); //pushing on the stack
 
 bookmarkBtn.addEventListener('click', addBookmark);
 
+/**
+ * Function used to push a new bookmark to the list of locally stored bookmarks and then display it
+ */
 function addBookmark() { //to local storage
     const text = document.querySelector('#textField').value;
     const url = document.querySelector('#urlField').value;
@@ -73,8 +94,10 @@ bookmarkList.addEventListener('click', e=> {
         removeFromLocalStorage(id);
     }
 })
-
-//delete bookmark from local storage
+/**
+ * Function used to remove a bookmark from the local storage of the user's computer and then update the GUI
+ * @param {*} id - the id of the bookmark the function aims to remove
+ */
 function removeFromLocalStorage(id) {
     let bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
     
